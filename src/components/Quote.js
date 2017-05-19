@@ -8,7 +8,7 @@ class Quote extends Component {
       isBeingEdited: false,
       inputContentValue: this.props.quote.content,
       inputAuthorValue: this.props.quote.author,
-      inputGenreValue: this.props.quote.genre_type,
+      inputGenreValue: '',
     }
 
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -38,6 +38,7 @@ class Quote extends Component {
   }
 
   renderEditForm() {
+    console.log(this.props.quote)
     return (
       <li>
         <form
@@ -48,21 +49,19 @@ class Quote extends Component {
             type="text"
             value={this.state.inputContentValue}
             name='content'
-            placeholder='Add Quote Here'
             onChange={this.handleInputContentChange}
           /><br/>
           <input
             type="text"
             value={this.state.inputAuthorValue}
             name='author'
-            placeholder='Add Author Here'
             onChange={this.handleInputAuthorChange}
           /><br/>
           <input
             type="text"
             value={this.state.inputGenreValue}
-            name='genre_id'
-            placeholder='Add Genre Here'
+            name='genre_type'
+            placeholder='Enter genre ID here'
             onChange={this.handleInputGenreChange}
           /><br/>
           <input
@@ -71,9 +70,7 @@ class Quote extends Component {
             name="id"
             value={this.props.quote.id}
           />
-          <button>
-            Submit Quote Edit!
-          </button>
+          <input type="submit" value="Submit Quote Edit!" />
         </form>
       </li>
     );

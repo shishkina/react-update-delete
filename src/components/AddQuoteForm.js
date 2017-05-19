@@ -24,11 +24,11 @@ class AddQuoteForm extends Component {
         <input
           type="text"
           value={this.props.inputGenreValue}
-          name='genre_id'
+          name='genre_type'
           placeholder='Add Genre Here'
           onChange={this.props.handleInputGenreChange}
         /><br/>
-        <button>Add Quote!</button>
+        <input type="submit" value="Add Quote!" />
       </form>
     );
   }

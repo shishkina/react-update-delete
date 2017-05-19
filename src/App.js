@@ -65,7 +65,7 @@ class App extends Component {
       body: JSON.stringify({
         content: event.target.content.value,
         author: event.target.author.value,
-        genre_id: event.target.genre_id.value
+        genre_id: event.target.genre_type.value
       }),
     })
     .then((response) => {
@@ -91,7 +91,6 @@ class App extends Component {
   }
 
   handleQuoteEdit(event) {
-    console.log('hello');
     event.preventDefault();
 
     fetch(`https://ada-api.herokuapp.com/api/quotes/${event.target.id.value}`, {
@@ -100,7 +99,7 @@ class App extends Component {
       body: JSON.stringify({
         content: event.target.content.value,
         author: event.target.author.value,
-        genre_id: event.target.genre_id.value
+        genre_id: event.target.genre_type.value
       }),
     })
     .then((response) => {
