@@ -7,13 +7,13 @@ class AddQuoteForm extends Component {
         className="add-quote-form"
         onSubmit={this.props.handleQuoteSubmit}
       >
-      <input
+        <input
           type="text"
           value={this.props.inputContentValue}
           name='content'
           placeholder='Add Quote Here'
           onChange={this.props.handleInputContentChange}
-      /><br/>
+        /><br/>
         <input
           type="text"
           value={this.props.inputAuthorValue}

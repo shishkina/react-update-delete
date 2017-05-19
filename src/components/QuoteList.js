@@ -7,7 +7,12 @@ class QuoteList extends Component {
       <ul className="quote-list">
         {this.props.quotes.map((quote) => {
           return (
-            <Quote key={quote.id} quote={quote} />
+            <Quote
+              key={quote.id}
+              quote={quote}
+              handleDeleteQuote={this.props.handleDeleteQuote}
+              handleQuoteEdit={this.props.handleQuoteEdit}
+            />
           )
         })}
       </ul>

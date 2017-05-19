@@ -18,6 +18,8 @@ class App extends Component {
     this.handleInputContentChange = this.handleInputContentChange.bind(this);
     this.handleInputAuthorChange = this.handleInputAuthorChange.bind(this);
     this.handleQuoteSubmit = this.handleQuoteSubmit.bind(this);
+    this.handleQuoteEdit = this.handleQuoteEdit.bind(this);
+    this.handleDeleteQuote = this.handleDeleteQuote.bind(this);
   }
 
   componentDidMount() {
@@ -25,18 +27,21 @@ class App extends Component {
      * The fetching we do here in componentDidMount will
      * only fetch when the component initially loads.
      */
+    this.fetchAllQuotes()
+  }
+
+  fetchAllQuotes() {
     fetch('https://ada-api.herokuapp.com/api/quotes')
-      .then((response) => {
-        console.log(response);
-        return response.json()
-      })
-      .then((responseJson) => {
-        this.setState((prevState) => {
-          return {
-            quotes: responseJson.quotesData,
-          }
-        });
+    .then((response) => {
+      return response.json()
+    })
+    .then((responseJson) => {
+      this.setState((prevState) => {
+        return {
+          quotes: responseJson.quotesData,
+        }
       });
+    });
   }
 
   handleInputContentChange(event) {
@@ -72,6 +77,7 @@ class App extends Component {
           content: responseJson.quote.content,
           author: responseJson.quote.author,
           genre_type: responseJson.quote.genre_type,
+          id: responseJson.quote.id,
         }
         this.setState((prevState) => {
           return {
@@ -80,6 +86,37 @@ class App extends Component {
         })
       } else {
         console.log('error');
+      }
+    })
+  }
+
+  handleQuoteEdit(event) {
+    console.log('hello');
+    event.preventDefault();
+
+    fetch(`https://ada-api.herokuapp.com/api/quotes/${event.target.id.value}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        content: event.target.content.value,
+        author: event.target.author.value,
+        genre_id: event.target.genre_id.value
+      }),
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        this.fetchAllQuotes();
+      }
+    })
+  }
+
+  handleDeleteQuote(quoteId) {
+    fetch(`https://ada-api.herokuapp.com/api/quotes/${quoteId}`, {
+      method: 'DELETE',
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        this.fetchAllQuotes();
       }
     })
   }
@@ -103,7 +140,11 @@ class App extends Component {
           inputAuthorValue={this.state.inputAuthorValue}
           inputGenreValue={this.state.inputGenreValue}
         />
-        <QuoteList quotes={this.state.quotes} />
+        <QuoteList
+          quotes={this.state.quotes}
+          handleDeleteQuote={this.handleDeleteQuote}
+          handleQuoteEdit={this.handleQuoteEdit}
+        />
       </div>
     );
   }
