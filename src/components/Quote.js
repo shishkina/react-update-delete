@@ -11,18 +11,9 @@ class Quote extends Component {
       inputGenreValue: '',
     }
 
-    this.toggleEdit = this.toggleEdit.bind(this);
     this.handleInputGenreChange = this.handleInputGenreChange.bind(this);
     this.handleInputContentChange = this.handleInputContentChange.bind(this);
     this.handleInputAuthorChange = this.handleInputAuthorChange.bind(this);
-  }
-
-  toggleEdit() {
-    this.setState((prevState) => {
-      return {
-        isBeingEdited: true,
-      }
-    })
   }
 
   handleInputContentChange(event) {
@@ -38,12 +29,14 @@ class Quote extends Component {
   }
 
   renderEditForm() {
-    console.log(this.props.quote)
     return (
       <li>
         <form
           className="add-quote-form"
-          onSubmit={this.props.handleQuoteEdit}
+          onSubmit={(event) => {
+            this.props.handleQuoteEdit(event);
+            this.setState({isBeingEdited: false});
+          }}
         >
           <input
             type="text"
@@ -85,7 +78,9 @@ class Quote extends Component {
         <button onClick={() => { this.props.handleDeleteQuote(this.props.quote.id) }}>
           Delete quote
         </button>
-        <button onClick={this.toggleEdit}>
+        <button onClick={() => {
+          this.setState({isBeingEdited: true})
+        }}>
           Edit quote
         </button>
       </li>
