@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class AddQuoteForm extends Component {
+  /**
+   * When the form is submitted, we call the handleQuoteSubmit method passed
+   * down from App. The input boxes get their values from the props we passed
+   * down from App and every time we add a character to the inputs, we call
+   * a method that will set the corresponding state in App.
+   */
   render() {
     return (
       <form
